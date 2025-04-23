@@ -3,6 +3,7 @@ import { getOrCreateUser, prisma } from '../db/index.js';
 import { TaskFactory } from '../tasks/taskFactory.js';
 import { SM2 } from '../utils/sm2.js';
 import { declensionByNumber } from '../utils/declensionByNumber.js';
+import _ from "lodash";
 
 export async function selectModuleForSession(ctx: BotContext) {
   if (!ctx.from) {
@@ -78,6 +79,7 @@ export async function startSession(ctx: BotContext, moduleId: number) {
 
   // Если карточек для повторения нет или их меньше 20, добавляем новые
   let cardIds = cardsForReview.map((p) => p.cardId);
+  console.log(cardIds);
 
   if (cardIds.length < 20) {
     const newCards = await prisma.card.findMany({
@@ -85,11 +87,10 @@ export async function startSession(ctx: BotContext, moduleId: number) {
         moduleId,
         id: { notIn: cardIds.length > 0 ? cardIds : [-1] },
       },
-      take: 20 - cardIds.length,
       select: { id: true },
     });
 
-    cardIds = [...cardIds, ...newCards.map((c) => c.id)];
+    cardIds = [...cardIds, ..._.shuffle(newCards).slice(0, 20 - cardIds.length).map((c) => c.id)];
   }
 
   cardIds = cardIds.slice(0, 20);

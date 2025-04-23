@@ -1,6 +1,7 @@
 import type { QuestionTask } from '../types/question.js';
 import type { BotContext } from '../types/index.js';
 import { prisma } from '../db/index.js';
+import _ from 'lodash';
 
 export class ChoiceTask implements QuestionTask {
   type = 'choice';
@@ -24,7 +25,6 @@ export class ChoiceTask implements QuestionTask {
         moduleId: card.moduleId,
         id: { not: card.id },
       },
-      take: 3,
       select: { id: true, definition: true },
     });
 
@@ -32,7 +32,7 @@ export class ChoiceTask implements QuestionTask {
       { id: card.id, definition: card.definition },
     ];
 
-    options = [...options, ...otherCards.map((c) => ({ id: c.id, definition: c.definition }))];
+    options = [...options, ..._.shuffle(otherCards).slice(0, 3).map((c) => ({ id: c.id, definition: c.definition }))];
 
     // Перемешиваем варианты
     options.sort(() => Math.random() - 0.5);
