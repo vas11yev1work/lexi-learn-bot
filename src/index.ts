@@ -63,7 +63,11 @@ bot.command('start', async (ctx) => {
     return;
   }
 
-  await getOrCreateUser(BigInt(ctx.from.id));
+  await getOrCreateUser(BigInt(ctx.from.id), {
+    name: ctx.from.first_name,
+    lastname: ctx.from.last_name,
+    username: ctx.from.username,
+  });
 
   await ctx.reply(
     '👋 Добро пожаловать в бота для изучения иностранных слов!\n\n' +

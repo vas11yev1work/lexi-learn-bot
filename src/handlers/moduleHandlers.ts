@@ -8,7 +8,11 @@ export async function listModules(ctx: BotContext): Promise<void> {
     return;
   }
 
-  const user = await getOrCreateUser(BigInt(ctx.from.id));
+  const user = await getOrCreateUser(BigInt(ctx.from.id), {
+    name: ctx.from.first_name,
+    lastname: ctx.from.last_name,
+    username: ctx.from.username,
+  });
 
   const modules = await prisma.module.findMany({
     where: { userId: user.id },

@@ -8,7 +8,11 @@ export async function showStatistics(ctx: BotContext): Promise<void> {
     return;
   }
 
-  const user = await getOrCreateUser(BigInt(ctx.from.id));
+  const user = await getOrCreateUser(BigInt(ctx.from.id), {
+    name: ctx.from.first_name,
+    lastname: ctx.from.last_name,
+    username: ctx.from.username,
+  });
 
   // Получаем общую статистику по всем модулям
   const totalCards = await prisma.card.count({

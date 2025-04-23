@@ -3,7 +3,7 @@ import { getOrCreateUser, prisma } from '../db/index.js';
 import { TaskFactory } from '../tasks/taskFactory.js';
 import { SM2 } from '../utils/sm2.js';
 import { declensionByNumber } from '../utils/declensionByNumber.js';
-import _ from "lodash";
+import _ from 'lodash';
 
 export async function selectModuleForSession(ctx: BotContext) {
   if (!ctx.from) {
@@ -11,7 +11,11 @@ export async function selectModuleForSession(ctx: BotContext) {
     return;
   }
 
-  const user = await getOrCreateUser(BigInt(ctx.from.id));
+  const user = await getOrCreateUser(BigInt(ctx.from.id), {
+    name: ctx.from.first_name,
+    lastname: ctx.from.last_name,
+    username: ctx.from.username,
+  });
 
   const modules = await prisma.module.findMany({
     where: {
@@ -53,7 +57,11 @@ export async function startSession(ctx: BotContext, moduleId: number) {
     return;
   }
 
-  const user = await getOrCreateUser(BigInt(ctx.from.id));
+  const user = await getOrCreateUser(BigInt(ctx.from.id), {
+    name: ctx.from.first_name,
+    lastname: ctx.from.last_name,
+    username: ctx.from.username,
+  });
 
   // Проверяем наличие карточек в модуле
   const cardsCount = await prisma.card.count({
@@ -90,7 +98,12 @@ export async function startSession(ctx: BotContext, moduleId: number) {
       select: { id: true },
     });
 
-    cardIds = [...cardIds, ..._.shuffle(newCards).slice(0, 20 - cardIds.length).map((c) => c.id)];
+    cardIds = [
+      ...cardIds,
+      ..._.shuffle(newCards)
+        .slice(0, 20 - cardIds.length)
+        .map((c) => c.id),
+    ];
   }
 
   cardIds = cardIds.slice(0, 20);
@@ -380,7 +393,11 @@ export async function updateProgressForIDK(ctx: BotContext, questionId: number) 
 async function updateProgressForWrongAnswer(ctx: BotContext, question: any): Promise<void> {
   if (!ctx.from) return;
 
-  const user = await getOrCreateUser(BigInt(ctx.from.id));
+  const user = await getOrCreateUser(BigInt(ctx.from.id), {
+    name: ctx.from.first_name,
+    lastname: ctx.from.last_name,
+    username: ctx.from.username,
+  });
 
   // Получаем или создаём запись прогресса
   let progress = await prisma.progress.findFirst({
@@ -435,7 +452,11 @@ export async function handleDifficulty(
     return;
   }
 
-  const user = await getOrCreateUser(BigInt(ctx.from.id));
+  const user = await getOrCreateUser(BigInt(ctx.from.id), {
+    name: ctx.from.first_name,
+    lastname: ctx.from.last_name,
+    username: ctx.from.username,
+  });
 
   // Получаем вопрос
   const question = await prisma.question.findUnique({

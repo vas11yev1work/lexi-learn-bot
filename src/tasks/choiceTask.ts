@@ -32,7 +32,12 @@ export class ChoiceTask implements QuestionTask {
       { id: card.id, definition: card.definition },
     ];
 
-    options = [...options, ..._.shuffle(otherCards).slice(0, 3).map((c) => ({ id: c.id, definition: c.definition }))];
+    options = [
+      ...options,
+      ..._.shuffle(otherCards)
+        .slice(0, 3)
+        .map((c) => ({ id: c.id, definition: c.definition })),
+    ];
 
     // Перемешиваем варианты
     options.sort(() => Math.random() - 0.5);
