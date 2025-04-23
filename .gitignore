@@ -1,0 +1,39 @@
+# Зависимости
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Собранные файлы
+dist/
+build/
+coverage/
+generated/
+
+# Кэши
+.npm
+.eslintcache
+.DS_Store
+.cache
+*.tsbuildinfo
+
+# Файлы среды
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+prisma/*.db
+prisma/*.db-journal
+
+# Логи
+logs
+*.log
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

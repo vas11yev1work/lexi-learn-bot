@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int        @id @default(autoincrement())
+  telegramId       BigInt     @unique
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  modules          Module[]
+  studySessions    Session[]
+  learningProgress Progress[]
+
+  @@map("users")
+}
+
+model Module {
+  id           Int           @id @default(autoincrement())
+  name         String
+  description  String
+  userId       Int
+  user         User          @relation(fields: [userId], references: [id])
+  customFields CustomField[]
+  cards        Card[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  Session      Session[]
+
+  @@map("modules")
+}
+
+model CustomField {
+  id       Int                @id @default(autoincrement())
+  name     String
+  moduleId Int
+  module   Module             @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  values   CustomFieldValue[]
+
+  @@map("custom_fields")
+}
+
+model CustomFieldValue {
+  id            Int         @id @default(autoincrement())
+  value         String
+  cardId        Int
+  card          Card        @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  customFieldId Int
+  customField   CustomField @relation(fields: [customFieldId], references: [id], onDelete: Cascade)
+
+  @@map("custom_field_values")
+}
+
+model Card {
+  id           Int                @id @default(autoincrement())
+  phrase       String
+  definition   String
+  hint         String?
+  moduleId     Int
+  module       Module             @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  customValues CustomFieldValue[]
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  progress     Progress[]
+  questions    Question[]
+
+  @@map("cards")
+}
+
+model Session {
+  id        Int        @id @default(autoincrement())
+  userId    Int
+  user      User       @relation(fields: [userId], references: [id])
+  moduleId  Int
+  module    Module     @relation(fields: [moduleId], references: [id])
+  completed Boolean    @default(false)
+  questions Question[]
+  startedAt DateTime   @default(now())
+  endedAt   DateTime?
+
+  @@map("sessions")
+}
+
+model Question {
+  id         Int              @id @default(autoincrement())
+  sessionId  Int
+  session    Session          @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  cardId     Int
+  card       Card             @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  type       String
+  answered   Boolean          @default(false)
+  correct    Boolean?
+  difficulty Int?
+  options    QuestionOption[]
+  createdAt  DateTime         @default(now())
+
+  @@map("questions")
+}
+
+model QuestionOption {
+  id         Int      @id @default(autoincrement())
+  questionId Int
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  text       String
+  isCorrect  Boolean
+
+  @@map("question_options")
+}
+
+model Progress {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  cardId       Int
+  card         Card     @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  easeFactor   Float    @default(2.5) // Фактор легкости SM-2
+  interval     Int      @default(0) // Интервал в днях
+  repetitions  Int      @default(0) // Количество повторений
+  nextReview   DateTime @default(now())
+  lastReviewed DateTime @default(now())
+}
