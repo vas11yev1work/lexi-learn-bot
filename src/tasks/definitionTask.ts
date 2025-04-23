@@ -1,7 +1,7 @@
-import type { QuestionTask } from '@/types/question.js';
-import type { BotContext } from '@/types/index.js';
-import { prisma } from '@/db/index.js';
-import { levenshtein } from '@/utils/levenshtein.js';
+import type { QuestionTask } from '../types/question.js';
+import type { BotContext } from '../types/index.js';
+import { prisma } from '../db/index.js';
+import { levenshtein } from '../utils/levenshtein.js';
 
 export class DefinitionTask implements QuestionTask {
   type = 'definition';

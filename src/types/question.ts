@@ -1,4 +1,4 @@
-import type { BotContext } from '@/types/index.js';
+import type { BotContext } from './index.js';
 
 // Базовый интерфейс для всех типов заданий
 export interface QuestionTask {

@@ -1,6 +1,6 @@
 import type { Conversation } from '@grammyjs/conversations';
-import type { BotContext } from '@/types/index.js';
-import { getOrCreateUser, prisma } from '@/db/index.js';
+import type { BotContext } from '../types/index.js';
+import { getOrCreateUser, prisma } from '../db/index.js';
 
 export async function createModuleConversation(
   conversation: Conversation<BotContext, BotContext>,

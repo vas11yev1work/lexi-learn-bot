@@ -1,5 +1,5 @@
-import type { BotContext } from '@/types/index.js';
-import { prisma, getOrCreateUser } from '@/db/index.js';
+import type { BotContext } from '../types/index.js';
+import { prisma, getOrCreateUser } from '../db/index.js';
 
 // Функция для отображения статистики обучения
 export async function showStatistics(ctx: BotContext): Promise<void> {

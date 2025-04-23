@@ -1,8 +1,8 @@
-import type { BotContext } from '@/types/index.js';
-import { getOrCreateUser, prisma } from '@/db/index.js';
-import { TaskFactory } from '@/tasks/taskFactory.js';
-import { SM2 } from '@/utils/sm2.js';
-import { declensionByNumber } from '@/utils/declensionByNumber.js';
+import type { BotContext } from '../types/index.js';
+import { getOrCreateUser, prisma } from '../db/index.js';
+import { TaskFactory } from '../tasks/taskFactory.js';
+import { SM2 } from '../utils/sm2.js';
+import { declensionByNumber } from '../utils/declensionByNumber.js';
 
 export async function selectModuleForSession(ctx: BotContext) {
   if (!ctx.from) {

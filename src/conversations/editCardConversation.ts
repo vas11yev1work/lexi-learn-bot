@@ -1,7 +1,7 @@
 import type { Conversation } from '@grammyjs/conversations';
-import type { BotContext } from '@/types/index.js';
-import { prisma } from '@/db/index.js';
-import * as moduleHandlers from '@/handlers/moduleHandlers.js';
+import type { BotContext } from '../types/index.js';
+import { prisma } from '../db/index.js';
+import * as moduleHandlers from '../handlers/moduleHandlers.js';
 
 export async function editCardConversation(
   conversation: Conversation<BotContext, BotContext>,

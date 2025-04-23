@@ -1,16 +1,16 @@
 import { Bot, GrammyError, HttpError, session } from 'grammy';
 import dotenv from 'dotenv';
-import type { BotContext, SessionData } from '@/types/index.js';
+import type { BotContext, SessionData } from './types/index.js';
 import { conversations, createConversation } from '@grammyjs/conversations';
 import { Menu } from '@grammyjs/menu';
-import { getOrCreateUser, prisma } from '@/db/index.js';
-import { createModuleConversation } from '@/conversations/createModuleConversation.js';
-import * as moduleHandlers from '@/handlers/moduleHandlers.js';
-import * as sessionHandlers from '@/handlers/sessionHandlers.js';
-import * as statisticsHandlers from '@/handlers/statisticsHandlers.js';
-import { createCardConversation } from '@/conversations/createCardConversation.js';
-import { TaskFactory } from '@/tasks/taskFactory.js';
-import { editCardConversation } from '@/conversations/editCardConversation.js';
+import { getOrCreateUser, prisma } from './db/index.js';
+import { createModuleConversation } from './conversations/createModuleConversation.js';
+import * as moduleHandlers from './handlers/moduleHandlers.js';
+import * as sessionHandlers from './handlers/sessionHandlers.js';
+import * as statisticsHandlers from './handlers/statisticsHandlers.js';
+import { createCardConversation } from './conversations/createCardConversation.js';
+import { TaskFactory } from './tasks/taskFactory.js';
+import { editCardConversation } from './conversations/editCardConversation.js';
 
 dotenv.config();
 

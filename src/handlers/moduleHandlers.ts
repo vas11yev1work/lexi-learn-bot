@@ -1,6 +1,6 @@
-import type { BotContext } from '@/types/index.js';
-import { getOrCreateUser, prisma } from '@/db/index.js';
-import { declensionByNumber } from '@/utils/declensionByNumber.js';
+import type { BotContext } from '../types/index.js';
+import { getOrCreateUser, prisma } from '../db/index.js';
+import { declensionByNumber } from '../utils/declensionByNumber.js';
 
 export async function listModules(ctx: BotContext): Promise<void> {
   if (!ctx.from) {

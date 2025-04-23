@@ -1,6 +1,6 @@
-import type { QuestionTask } from '@/types/question.js';
-import type { BotContext } from '@/types/index.js';
-import { prisma } from '@/db/index.js';
+import type { QuestionTask } from '../types/question.js';
+import type { BotContext } from '../types/index.js';
+import { prisma } from '../db/index.js';
 
 export class ChoiceTask implements QuestionTask {
   type = 'choice';

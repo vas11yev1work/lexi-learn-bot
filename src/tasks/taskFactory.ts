@@ -1,6 +1,6 @@
-import type { QuestionTask } from '@/types/question.js';
+import type { QuestionTask } from '../types/question.js';
 import { DefinitionTask } from './definitionTask.js';
-import { ChoiceTask } from '@/tasks/choiceTask.js';
+import { ChoiceTask } from './choiceTask.js';
 
 export class TaskFactory {
   private static tasks: Map<string, QuestionTask> = new Map();
