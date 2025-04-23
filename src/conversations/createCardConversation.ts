@@ -18,11 +18,16 @@ export async function createCardConversation(
 
   const module = await prisma.module.findUnique({
     where: { id: moduleId },
-    include: { customFields: true },
+    include: { customFields: true, _count: { select: { cards: true } } },
   });
 
   if (!module) {
     await ctx.reply('Модуль не найден. Пожалуйста, выберите другой модуль');
+    return;
+  }
+
+  if (module._count.cards > 80) {
+    await ctx.reply('Максимум 80 карточек в одном модуле. Пожалуйста, создайте новый модуль');
     return;
   }
 

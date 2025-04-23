@@ -138,7 +138,7 @@ export async function viewAllCards(ctx: BotContext, moduleId: number, page: numb
   const hasNextPage = module.cards.length > pageSize;
   const cardsToShow = hasNextPage ? module.cards.slice(0, pageSize) : module.cards;
 
-  let message = `📚 <b>Карточки модуля "${module.name}"</b> ${hasNextPage ? `(страница ${page + 1})` : ''}\n\n`;
+  let message = `📚 <b>Карточки модуля "${module.name}"</b> ${hasNextPage || page > 0 ? `(страница ${page + 1})` : ''}\n\n`;
 
   for (const card of cardsToShow) {
     message += `<b>${card.phrase}</b> – ${card.definition}\n`;
